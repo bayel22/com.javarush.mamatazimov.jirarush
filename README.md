@@ -26,5 +26,44 @@
 
 - https://habr.com/ru/articles/259055/
 
+---
+### Запуск приложения 🚀
+#### 1. Через Docker 🐳
+- В Maven выбрать профиль **prod** 
+- Сбилдить приложение:  
+```bash
+  mvn clean install
+```
+- Перейти по ссылке: [http://localhost:8080](http://localhost:8080)
+- Пример пользователя:
+	- login: admin@gmail.com
+	- password: admin
+---
+#### 2. Через IDEA 🎯
+- Запустить локально сервер БД (PostgreSQL):
+```
+docker run -p 5432:5432 --name postgres-db -e POSTGRES_USER=jira -e POSTGRES_PASSWORD=JiraRush -e POSTGRES_DB=jira -e PGDATA=/var/lib/postgresql/data/pgdata -v ./pgdata:/var/lib/postgresql/data -d postgres
+```
+- В файле `.env` изменить значение:
+```
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/jira
+```
+- Сбилдить приложение:  
+```bash
+  mvn clean install
+```
+
+- В IDEA открыть **Run | Edit Configurations**
+    
+- Выбрать конфигурацию запуска: **Spring Boot | JiraRushApplication**
+    
+- Включить **Enable EnvFile**
+    
+- Добавить файл `.env`, находящийся в корне проекта
+    
+- Нажать **Apply**, затем **Run**
+![изображение](https://github.com/user-attachments/assets/870565a5-0930-4616-b46a-e8d364130480)
+
+---
 Список выполненных задач:
 ...
