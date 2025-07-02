@@ -34,6 +34,10 @@
 ```bash
   mvn clean install
 ```
+- Запустить через консоль:
+```
+docker compose up
+```
 - Перейти по ссылке: [http://localhost:8080](http://localhost:8080)
 - Пример пользователя:
 	- login: admin@gmail.com
