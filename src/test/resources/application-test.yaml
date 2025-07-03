@@ -1,41 +1,67 @@
-spring:
-  cache:
-    type: none
+# application-test.yml
 
-  datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+app:
+  host-url: http://localhost:8080
+  test-mail: jira4jr@gmail.com
+  templates-update-cache: 5s
+  mail-sending-props:
+    core-pool-size: 8
+    max-pool-size: 100
+
+spring:
+  init:
+    mode:
 
   jpa:
+    show-sql: true
+    open-in-view: false
+
     hibernate:
-      ddl-auto: none
-    database-platform: org.hibernate.dialect.H2Dialect
+      ddl-auto: validate
+
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 20
+        jdbc.batch_size: 20
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/jira-test
+    username: jira
+    password: JiraRush
 
   liquibase:
-    enabled: true
-    change-log: classpath:db/changelog.sql
-    drop-first: true
+    changeLog: classpath:db/changelog-test.sql
+
+  jackson:
+    visibility:
+      field: any
+      getter: none
+      setter: none
+      is-getter: none
+
+  cache:
+    cache-names: users
+    caffeine.spec: maximumSize=10000,expireAfterAccess=5m
 
   security:
     oauth2:
       client:
         registration:
           github:
-            client-id: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_ID}
-            client-secret: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_SECRET}
+            client-id: 3d0d8738e65881fff266
+            client-secret: 0f97031ce6178b7dfb67a6af587f37e222a16120
             scope:
               - email
           google:
-            client-id: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID}
-            client-secret: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET}
+            client-id: 329113642700-f8if6pu68j2repq3ef6umd5jgiliup60.apps.googleusercontent.com
+            client-secret: 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
             scope:
               - email
               - profile
           gitlab:
-            client-id: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITLAB_CLIENT_ID}
-            client-secret: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITLAB_CLIENT_SECRET}
+            client-id: b8520a3266089063c0d8261cce36971defa513f5ffd9f9b7a3d16728fc83a494
+            client-secret: e72c65320cf9d6495984a37b0f9cc03ec46be0bb6f071feaebbfe75168117004
             client-name: GitLab
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
@@ -49,7 +75,7 @@ spring:
 
   sql:
     init:
-      data-locations: data.sql
+      mode: always
 
   mail:
     properties:
@@ -59,9 +85,35 @@ spring:
             enable: true
           auth: true
     host: smtp.gmail.com
-    username: ${SPRING_MAIL_USERNAME}
-    password: ${SPRING_MAIL_PASSWORD}
+    username: jira4jr@gmail.com
+    password: zdfzsrqvgimldzyj
     port: 587
-  template:
-    view-path: ./resources/view/
-    mail-path: ./resources/mails
+
+  thymeleaf:
+    check-template-location: false
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+  web:
+    resources:
+      add-mappings: false
+
+logging:
+  level:
+    root: WARN
+    com.javarush.jira: DEBUG
+    com.javarush.jira.common.config.MvcConfig: WARN
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
+
+server:
+  forward-headers-strategy: framework
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+springdoc:
+  swagger-ui:
+    path: /doc
