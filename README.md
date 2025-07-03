@@ -68,7 +68,7 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/jira
 - Нажать **Apply**, затем **Run**
 ![изображение](https://github.com/user-attachments/assets/870565a5-0930-4616-b46a-e8d364130480)
 
-- Перейти по ссылке: [http://localhost:80](http://localhost:80)
+- Перейти по ссылке: [http://localhost:8080](http://localhost:8080)
 
 ---
 # Список выполненных задач
