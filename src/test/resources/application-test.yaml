@@ -15,10 +15,8 @@ spring:
   jpa:
     show-sql: true
     open-in-view: false
-
     hibernate:
-      ddl-auto: validate
-
+      ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
@@ -26,12 +24,13 @@ spring:
         jdbc.batch_size: 20
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/jira-test
-    username: jira
-    password: JiraRush
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   liquibase:
-    changeLog: classpath:db/changelog-test.sql
+    enabled: false
 
   jackson:
     visibility:
@@ -76,6 +75,9 @@ spring:
   sql:
     init:
       mode: always
+      platform: h2
+      schema-locations: classpath:changelog-test.sql
+      data-locations: classpath:data.sql
 
   mail:
     properties:
