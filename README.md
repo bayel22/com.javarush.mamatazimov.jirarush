@@ -104,4 +104,3 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/jira
     Для Nginx используется конфигурационный файл `config/nginx.conf`.
 
 12. 
-...
