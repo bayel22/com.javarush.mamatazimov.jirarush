@@ -1,8 +1,67 @@
-spring.cache.type: none
 spring:
-  init:
-    mode: always
+  cache:
+    type: none
+
   datasource:
-    url: jdbc:postgresql://localhost:5433/jira-test
-    username: jira
-    password: JiraRush
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog.sql
+    drop-first: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_ID}
+            client-secret: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITHUB_CLIENT_SECRET}
+            scope:
+              - email
+          google:
+            client-id: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID}
+            client-secret: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+          gitlab:
+            client-id: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITLAB_CLIENT_ID}
+            client-secret: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_GITLAB_CLIENT_SECRET}
+            client-name: GitLab
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope: read_user
+        provider:
+          gitlab:
+            authorization-uri: https://gitlab.com/oauth/authorize
+            token-uri: https://gitlab.com/oauth/token
+            user-info-uri: https://gitlab.com/api/v4/user
+            user-name-attribute: email
+
+  sql:
+    init:
+      data-locations: data.sql
+
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    host: smtp.gmail.com
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    port: 587
+  template:
+    view-path: ./resources/view/
+    mail-path: ./resources/mails
