@@ -38,6 +38,10 @@
 ```
 docker compose up
 ```
+Во время запуска приложения произойдет популяция БД для работы.
+Если точнее – накатится структура и словари. 
+Чтоб «посмотреть» как работает приложение нужно выполнить скрипт data.sql из resources/data4dev. 
+
 - Перейти по ссылке: [http://localhost:80](http://localhost:80)
 - Пример пользователя:
 	- login: admin@gmail.com
@@ -68,7 +72,14 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/jira
 - Нажать **Apply**, затем **Run**
 ![изображение](https://github.com/user-attachments/assets/870565a5-0930-4616-b46a-e8d364130480)
 
+Во время запуска приложения произойдет популяция БД для работы.
+Если точнее – накатится структура и словари. 
+Чтоб «посмотреть» как работает приложение нужно выполнить скрипт data.sql из resources/data4dev. 
+
 - Перейти по ссылке: [http://localhost:8080](http://localhost:8080)
+- Пример пользователя:
+	- login: admin@gmail.com
+	- password: admin
 
 ---
 # Список выполненных задач
@@ -87,20 +98,10 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/jira
 
 4. Переделаны тесты: во время тестирования используется in-memory база данных H2 вместо PostgreSQL.
 
-5. 
-
-6. Проведен рефакторинг метода `com.javarush.jira.bugtracking.attachment.FileUtil#upload`:  
+5. Проведен рефакторинг метода `com.javarush.jira.bugtracking.attachment.FileUtil#upload`:  
    теперь используется современный подход работы с файловой системой.
 
-7.
+6. Создан Dockerfile для основного сервера.
 
-8. 
-
-9. Создан Dockerfile для основного сервера.
-
-10. 
-
-11. Написан `docker-compose` файл для запуска сервера вместе с базой данных и Nginx.  
-    Для Nginx используется конфигурационный файл `config/nginx.conf`.
-
-12. 
+7. Написан `docker-compose` файл для запуска сервера вместе с базой данных и Nginx.  
+   Для Nginx используется конфигурационный файл `config/nginx.conf`.
